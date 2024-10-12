@@ -53,22 +53,6 @@ for text, label in zip(data_texts, data_labels):
     prediction_value = tf.argmax(output, axis=1).numpy()[0]
     y_pred.append(prediction_value)
 
-    """
-    # Convert numeric prediction to category label
-    if prediction_value == 0:
-        prediction_label = "Business"
-    elif prediction_value == 1:
-        prediction_label = "Entertainment"
-    elif prediction_value == 2:
-        prediction_label = "Politics"
-    elif prediction_value == 3:
-        prediction_label = "Sport"
-    else:
-        prediction_label = "Tech" # Handle unexpected values if necessary
-
-    print("🤖Predicted Category:", prediction_label)
-    """
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 print("y_true: ", y_true)

@@ -75,5 +75,4 @@ for dataset in datasets:
       fw.write(create_fake_data(keys[key_counter]) + "\t" + keys[key_counter] + "\n")
       key_counter += 1
       if key_counter > len(keys) - 1:
-        # fw.write("------------------------------------------------------\n")
         key_counter = 0
