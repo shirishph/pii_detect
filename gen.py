@@ -1,4 +1,8 @@
 from faker import Faker
+
+TOTAL_TRAINING_DATAPOINTS = 20000
+TOTAL_HOLDOUT_DATAPOINTS = 1000
+
 fake = Faker()
 
 def create_fake_data(key):
@@ -6,7 +10,7 @@ def create_fake_data(key):
     return fake.credit_card_number()
   if key == "datetime":
     return str(fake.date_time_this_decade())
-  if key == "email":
+  if key == "emailaddress":
     return fake.ascii_company_email()
   if key == "ibancode":
     return fake.iban()
@@ -21,7 +25,7 @@ def create_fake_data(key):
   if key == "phonenumber":
     return fake.phone_number()
   if key == "url":
-    return fake.uri() # Todo: Tech debt, expecation is of URI but has a misnomer of URL
+    return fake.uri() # Todo: Tech debt, expectation is of URI but has a misnomer of URL
   if key == "usabanknumber":
     return fake.aba() # Todo: Use a proper bank number 8-17 digits
   if key == "usadriverlicense":
@@ -38,7 +42,7 @@ def create_fake_data(key):
 keys = [
   "creditcard",
   "datetime",
-  "email",
+  "emailaddress",
   "ibancode",
   "ipaddress",
   "nrp",
@@ -59,15 +63,17 @@ for key in keys:
 """
 
 datasets = [
-  (100, "train-dataset.tsv"),
-  (50, "holdout-dataset.tsv")
+  (TOTAL_TRAINING_DATAPOINTS, "train-dataset.tsv"),
+  (TOTAL_HOLDOUT_DATAPOINTS, "holdout-dataset.tsv")
 ]
 
 for dataset in datasets:
   with open(dataset[1], "w") as fw:
     fw.write("data\tlabels\n")
+    key_counter = 0
     for i in range(dataset[0]):
-      for key in keys:
-        fw.write(create_fake_data(key) + "\t" + key + "\n")
-      fw.write("------------------------------------------------------\n")
-
+      fw.write(create_fake_data(keys[key_counter]) + "\t" + keys[key_counter] + "\n")
+      key_counter += 1
+      if key_counter > len(keys) - 1:
+        # fw.write("------------------------------------------------------\n")
+        key_counter = 0
